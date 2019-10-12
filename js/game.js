@@ -37,7 +37,7 @@ class Level extends Base {
     this.genes = this.physics.add.staticGroup({
       key: 'gene',
       repeat: 9,
-      setXY: { x: 120, y: 60, stepY: 70 },
+      setXY: { x: 120, y: 60, stepY: 55 },
     });
 
     function make_array(length) {
