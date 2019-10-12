@@ -43,14 +43,14 @@ class Level extends Base {
     function make_array(length) {
       // https://stackoverflow.com/a/5836921/4400820
       function shuffle(a) {
-        let tmp, current, top = array.length;
+        let tmp, current, top = a.length;
         if(top) while(--top) {
           current = Math.floor(Math.random() * (top + 1));
-          tmp = array[current];
-          array[current] = array[top];
-          array[top] = tmp;
+          tmp = a[current];
+          a[current] = a[top];
+          a[top] = tmp;
         }
-        return array;
+        return a;
       }
       let array = []
       for (let i = 0; i < length; ++i) {
