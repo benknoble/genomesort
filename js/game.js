@@ -1,3 +1,12 @@
+var style = {
+  // font: "32px Arial"
+  // fill: "#ff0044"
+  // wordWrap: true
+  // wordWrapWidth: sprite.width
+  // align: "center"
+  // backgroundColor: "#ffff00"
+}
+
 // base scene
 // anything common across the entire game goes here
 class Base extends Phaser.Scene {
@@ -61,9 +70,18 @@ class Level extends Base {
 
     this.values = make_array(10);
 
-    this.genes.children.iterate(function (gene) {
-      // give 'em numbers?
-    });
+    {
+      // put this in it's own scope to prevent leakage
+      let i = 0;
+      let that = this;
+      this.genes.children.iterate(function (gene) {
+        gene.name = "gene" + i;
+        gene.setData('number', that.values[i]);
+        let text = that.add.text(0, 0, ""+that.values[i], style)
+        gene.setData('text', text);
+        ++i;
+      });
+    }
 
     this.physics.add.overlap(this.player, this.genes, this.swap, null, this);
     this.physics.add.collider(this.player, this.genes);
@@ -72,6 +90,11 @@ class Level extends Base {
   update() {
     super.preload()
     this.player_move()
+    this.genes.children.iterate(function (gene) {
+      let text = gene.getData('text');
+      text.x = Math.floor(gene.x + gene.width / 2);
+      text.y = Math.floor(gene.y - 20);
+    });
   }
 
   player_move() {
