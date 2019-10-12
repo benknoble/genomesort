@@ -1,0 +1,31 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+LOGFILE=server.log
+
+trap 'rm $LOGFILE' EXIT
+
+log() {
+  printf '%s\n' "$@"
+} >&2
+
+usage() {
+  cat <<DOG
+usage: $0
+DOG
+}
+
+die() {
+  local ex="${1:-1}"
+  exit "$ex"
+}
+
+usage_and_die() { usage && die; }
+
+main() {
+  (($# > 0)) && usage_and_die
+  python3 -m http.server >"$LOGFILE" 2>&1
+}
+
+main "$@"
