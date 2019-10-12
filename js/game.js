@@ -1,22 +1,41 @@
 // base scene
 // anything common across the entire game goes here
 class Base extends Phaser.Scene {
+  constructor() {
+    super()
+  }
+
+  preload() {
+  }
+
+  create() {
+  }
+
+  update() {
+  }
 }
 
 // level scene
 class Level extends Base {
 
+  constructor() {
+    super()
+  }
+
   preload() {
+    super.preload()
     this.load.image('gnome', 'assets/gnome.png');
   }
 
   create() {
+    super.preload()
     this.player = this.physics.add.image(100, 450, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   update() {
+    super.preload()
     this.player_move()
   }
 
