@@ -1,4 +1,43 @@
-var config = {
+// base scene
+// anything common across the entire game goes here
+class Base extends Phaser.Scene {
+}
+
+// level scene
+class Level extends Base {
+
+  preload() {
+    this.load.image('gnome', 'assets/gnome.png');
+  }
+
+  create() {
+    this.player = this.physics.add.image(100, 450, 'gnome');
+    this.player.setCollideWorldBounds(true);
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  update() {
+    this.player_move()
+  }
+
+  player_move() {
+    if (this.cursors.left.isDown) {
+      this.player.setVelocityX(-160);
+    }
+    else if (this.cursors.right.isDown) {
+      this.player.setVelocityX(160);
+    }
+    else {
+      this.player.setVelocityX(0);
+    }
+  }
+
+}
+
+// declare scenes
+let level1 = new Level()
+
+let config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
@@ -8,40 +47,11 @@ var config = {
       gravity: { y: 200 }
     }
   },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
+  scene: [
+    level1,
+  ],
 };
 
-new Phaser.Game(config);
-
-var player;
-var cursors;
-
-function preload() {
-  this.load.image('gnome', 'assets/gnome.png');
-}
-
-function create() {
-  player = this.physics.add.image(100, 450, 'gnome');
-  player.setCollideWorldBounds(true);
-  cursors = this.input.keyboard.createCursorKeys();
-}
-
-function update() {
-  player_move()
-}
-
-function player_move() {
-  if (cursors.left.isDown) {
-    player.setVelocityX(-160);
-  }
-  else if (cursors.right.isDown) {
-    player.setVelocityX(160);
-  }
-  else {
-    player.setVelocityX(0);
-  }
-}
+// start game
+let game = new Phaser.Game(config);
+game.scene.start('level1')
