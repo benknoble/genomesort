@@ -53,8 +53,29 @@ class Level extends Base {
 
 }
 
+//Main Menu Scene
+class mainMenu extends Phaser.Scene {
+  constructor() {
+    super()
+  } 
+
+  preload() {
+    this.load.image('menu', 'assets/menuBackground.png')
+    this.load.image('title', 'assets/GeNome.png')
+  }
+
+  create() {
+    this.add.image(400, 300, 'menu');
+    this.add.image(400, 150, 'title');
+  }
+
+  update() {
+  }
+}
+
 // declare scenes
 let level1 = new Level()
+let menu = new mainMenu()
 
 let config = {
   type: Phaser.AUTO,
@@ -68,9 +89,10 @@ let config = {
   },
   scene: [
     level1,
+    menu
   ],
 };
 
 // start game
 let game = new Phaser.Game(config);
-game.scene.start('level1')
+game.scene.start('menu')
