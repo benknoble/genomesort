@@ -89,7 +89,9 @@ class Level extends Base {
       let gene = this.genes[i];
       gene.name = "gene" + i;
       gene.setData('number', this.values[i]);
-      let text = this.add.text(0, 0, ""+gene.getData('number'), style)
+      let text = this.add.text(0, 0, ""+gene.getData('number'), {
+        fill: "#000000",
+      })
       gene.setData('text', text);
     }
 
