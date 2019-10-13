@@ -15,7 +15,10 @@ class Base extends Phaser.Scene {
     this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
     this.load.image('title', 'assets/GeNOME.png')
     this.load.image('arrow', 'assets/arrow.png');
-    this.load.image('gene', 'assets/gene.png');
+    this.load.image('protein1', 'assets/protein1.png');
+    this.load.image('protein2', 'assets/protein2.png');
+    this.load.image('protein3', 'assets/protein3.png');
+    this.load.image('protein4', 'assets/protein4.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('bg', 'assets/bg.png');
     this.load.image('wall', 'assets/wall.png');
@@ -99,7 +102,7 @@ class Level extends Base {
       let dy = 60;
       let y = y0;
       for (let i = 0; i < 10; ++i) {
-        this.genes.push(this.physics.add.staticImage(x0, y, 'gene'));
+        this.genes.push(this.physics.add.staticImage(x0, y, 'protein' + (i % 4 + 1)));
         y += dy;
       }
     }
