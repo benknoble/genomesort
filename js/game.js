@@ -1,3 +1,12 @@
+var style = {
+  // font: "32px Arial"
+  // fill: "#ff0044"
+  // wordWrap: true
+  // wordWrapWidth: sprite.width
+  // align: "center"
+  // backgroundColor: "#ffff00"
+}
+
 // base scene
 // anything common across the entire game goes here
 class Base extends Phaser.Scene {
@@ -24,33 +33,44 @@ class Level extends Base {
 
   preload() {
     super.preload()
+    this.load.image('bg', 'assets/bg.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('gene', 'assets/gene.png');
+    this.load.image('arrow', 'assets/arrow.png');
   }
 
   create() {
     super.preload()
+    this.add.image(400, 300, 'bg');
     this.player = this.physics.add.image(400, 300, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.physics.add.staticImage(100/2, 550/2, 'arrow');
 
-    this.genes = this.physics.add.staticGroup({
-      key: 'gene',
-      repeat: 9,
-      setXY: { x: 120, y: 60, stepY: 70 },
-    });
+    this.genes = [];
+
+    {
+      let x0 = 180;
+      let y0 = 30;
+      let dy = 60;
+      let y = y0;
+      for (let i = 0; i < 10; ++i) {
+        this.genes.push(this.physics.add.staticImage(x0, y, 'gene'));
+        y += dy;
+      }
+    }
 
     function make_array(length) {
       // https://stackoverflow.com/a/5836921/4400820
       function shuffle(a) {
-        let tmp, current, top = array.length;
+        let tmp, current, top = a.length;
         if(top) while(--top) {
           current = Math.floor(Math.random() * (top + 1));
-          tmp = array[current];
-          array[current] = array[top];
-          array[top] = tmp;
+          tmp = a[current];
+          a[current] = a[top];
+          a[top] = tmp;
         }
-        return array;
+        return a;
       }
       let array = []
       for (let i = 0; i < length; ++i) {
@@ -60,18 +80,34 @@ class Level extends Base {
     }
 
     this.values = make_array(10);
+    this._gene_vals = [];
 
-    this.genes.children.iterate(function (gene) {
-      // give 'em numbers?
-    });
+    for (let i = 0 ; i < this.genes.length; ++i) {
+      let gene = this.genes[i];
+      gene.name = "gene" + i;
+      gene.setData('number', this.values[i]);
+      let text = this.add.text(0, 0, ""+gene.getData('number'), style)
+      gene.setData('text', text);
+    }
 
-    this.physics.add.overlap(this.player, this.genes, this.swap, null, this);
-    this.physics.add.collider(this.player, this.genes);
+    this.physics.add.collider(this.player, this.genes, this.swap, null, this);
   }
 
   update() {
     super.preload()
     this.player_move()
+    this._gene_vals = [];
+    for (let i = 0 ; i < this.genes.length; ++i) {
+      let gene = this.genes[i];
+      let text = gene.getData('text');
+      text.x = Math.floor(gene.x + gene.width / 2);
+      text.y = Math.floor(gene.y - 20);
+      this._gene_vals.push(gene.getData('number'));
+    }
+    if (this.check_sorted()) {
+      // do something useful
+      console.log('sorted');
+    }
   }
 
   player_move() {
@@ -93,12 +129,41 @@ class Level extends Base {
     }
   }
 
+  // swap one down
   swap(player, gene) {
-    // swap one down
+    // stop further hits, no matter what
+    player.x += 20;
+
+    let swap_i = null;
+    for (let i = 1 ; i < this.genes.length; ++i) {
+      let g = this.genes[i];
+      if (g.name === gene.name) {
+        swap_i = i-1;
+        break;
+      }
+    }
+
+    if (swap_i === null) return;
+
+    {
+      let temp = gene.getData('text');
+      gene.setData('text', this.genes[swap_i].getData('text'));
+      this.genes[swap_i].setData('text', temp);
+    }
+    {
+      let temp = gene.getData('number');
+      gene.setData('number', this.genes[swap_i].getData('number'));
+      this.genes[swap_i].setData('number', temp);
+    }
+
   }
 
   check_sorted() {
     // check if the genes sorted
+    for (let i = 0; i < this._gene_vals.length-1; ++i) {
+      if (this._gene_vals[i] > this._gene_vals[i+1])
+        return false;
+    }
     return true;
   }
 
@@ -114,7 +179,7 @@ class mainMenu extends Base {
   preload() {
     super.preload();
     this.load.image('menu', 'assets/menuBackground.png')
-    this.load.image('title', 'assets/GeNome.png')
+    this.load.image('title', 'assets/GeNOME.png')
     this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
     this.load.spritesheet('about', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
   }
@@ -161,6 +226,7 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
+      // debug: true,
     },
   },
   scene: [
