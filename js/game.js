@@ -10,11 +10,25 @@ var style = {
 // base scene
 // anything common across the entire game goes here
 class Base extends Phaser.Scene {
-  constructor() {
-    super()
+  constructor(config) {
+    super(config)
   }
 
   preload() {
+    this.load.spritesheet('next', 'assets/nextButton.png', {frameWidth: 193, frameHeight: 92})
+    this.load.image('congratzMessage', 'assets/congratsTEXT.png')
+    this.load.image('congratz', 'assets/congratsBack.png')
+    this.load.image('menu', 'assets/menuBackground.png');
+    this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92})
+    this.load.spritesheet('help', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
+    this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
+    this.load.image('title', 'assets/GeNOME.png')
+    this.load.image('menu', 'assets/menuBackground.png')
+    this.load.image('arrow', 'assets/arrow.png');
+    this.load.image('gene', 'assets/gene.png');
+    this.load.image('gnome', 'assets/gnome.png');
+    this.load.image('bg', 'assets/bg.png');
+    this.load.image('wall', 'assets/wall.png');
   }
 
   create() {
@@ -27,22 +41,17 @@ class Base extends Phaser.Scene {
 // level scene
 class Level extends Base {
 
-  constructor(scene) {
-    super()
+  constructor(config, scene) {
+    super(config)
     this.next_scene = scene;
   }
 
   preload() {
     super.preload()
-    this.load.image('wall', 'assets/wall.png');
-    this.load.image('bg', 'assets/bg.png');
-    this.load.image('gnome', 'assets/gnome.png');
-    this.load.image('gene', 'assets/gene.png');
-    this.load.image('arrow', 'assets/arrow.png');
   }
 
   create() {
-    super.preload()
+    super.create()
     this.add.image(400, 300, 'bg');
     this.add.text(575, 50, 'Sort (descending)!', {
       fill: "#000000",
@@ -67,6 +76,7 @@ class Level extends Base {
     }
 
     function make_array(length) {
+      // return [2, 1, 3, 4, 5, 6, 7, 8, 9, 10];
       // https://stackoverflow.com/a/5836921/4400820
       function shuffle(a) {
         let tmp, current, top = a.length;
@@ -103,7 +113,7 @@ class Level extends Base {
   }
 
   update() {
-    super.preload()
+    super.update()
     this.player_move()
     this._gene_vals = [];
     for (let i = 0 ; i < this.genes.length; ++i) {
@@ -189,17 +199,12 @@ class Level extends Base {
 //Main Menu Scene
 class MainMenu extends Base {
 
-  constructor() {
-    super()
+  constructor(config) {
+    super(config)
   } 
 
   preload() {
     super.preload();
-    this.load.image('menu', 'assets/menuBackground.png')
-    this.load.image('title', 'assets/GeNOME.png')
-    this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
-    this.load.spritesheet('help', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
-    this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92})
   }
 
   create() {
@@ -213,7 +218,7 @@ class MainMenu extends Base {
       this.startButton.setFrame(1);
     }, this);
     this.startButton.on('pointerout', () => {this.startButton.setFrame(0)}, this);
-    this.startButton.on('pointerdown', () => {this.scene.start(level1)});
+    this.startButton.on('pointerdown', () => {this.scene.start('l1')});
 
     // implementation for "How to Play" Button
     this.helpButton = this.add.sprite(400, 405, 'help').setFrame(0).setInteractive();
@@ -229,7 +234,7 @@ class MainMenu extends Base {
       this.aboutButton.setFrame(1);
     }, this);
     this.aboutButton.on('pointerout', () => {this.aboutButton.setFrame(0)}, this);
-    this.aboutButton.on('pointerdown', () => {this.scene.start(about)});
+    this.aboutButton.on('pointerdown', () => {this.scene.start('about')});
   }
 
   update() {
@@ -241,18 +246,17 @@ class MainMenu extends Base {
 
 class AboutScreen extends Base {
 
-  constructor(menu) {
-    super();
+  constructor(config, menu) {
+    super(config);
     this._menu = menu;
   }
 
   preload() {
     super.preload();
-    this.load.image('menu', 'assets/menuBackground.png');
     
-    // this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92});   
-    // this.load.image('aboutPanel', 'assets/aboutPanel.png');
     // this.load.image('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
+    // this.load.image('aboutPanel', 'assets/aboutPanel.png');
+    // this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92});   
   }
 
   create() {
@@ -278,16 +282,13 @@ class AboutScreen extends Base {
 
 class CongratzScreen extends Base {
 
-  constructor(scene) {
-    super();
+  constructor(config, scene) {
+    super(config);
     this.next = scene;
   }
 
   preload(){
     super.preload()
-    this.load.image('congratz', 'assets/congratsBack.png')
-    this.load.image('congratzMessage', 'assets/congratsTEXT.png')
-    this.load.spritesheet('next', 'assets/nextButton.png', {frameWidth: 193, frameHeight: 92})
   }
 
   create() {
@@ -299,7 +300,8 @@ class CongratzScreen extends Base {
       this.nextButton.setFrame(1);
     }, this);
     this.nextButton.on('pointerout', () => {this.nextButton.setFrame(0)}, this);
-    this.nextButton.on('pointerdown', () => {this.scene.start(this.next)});
+    this.nextButton.on('pointerdown', () => { this.scene.start(this.next)
+    }, this);
   }
 
   update() {
@@ -309,18 +311,18 @@ class CongratzScreen extends Base {
 }
 
 // declare scenes
-let menu = new MainMenu()
-let about = new AboutScreen(menu);
-let congrat5 = new CongratzScreen(menu);
-let level5 = new Level(congrat5);
-let congrat4 = new CongratzScreen(level5);
-let level4 = new Level(congrat4);
-let congrat3 = new CongratzScreen(level4);
-let level3 = new Level(congrat3);
-let congrat2 = new CongratzScreen(level3);
-let level2 = new Level(congrat2);
-let congrat1 = new CongratzScreen(level2);
-let level1 = new Level(congrat1)
+let menu = new MainMenu('menu')
+let about = new AboutScreen('aboutscr', 'menu');
+let congrat5 = new CongratzScreen('c5', 'menu');
+let level5 = new Level('l5', 'c5');
+let congrat4 = new CongratzScreen('c4', 'l5');
+let level4 = new Level('l4', 'c4');
+let congrat3 = new CongratzScreen('c3', 'l4');
+let level3 = new Level('l3', 'c3');
+let congrat2 = new CongratzScreen('c2', 'l3');
+let level2 = new Level('l2', 'c2');
+let congrat1 = new CongratzScreen('c1', 'l2');
+let level1 = new Level('l1', 'c1')
 
 let config = {
   type: Phaser.AUTO,
@@ -333,6 +335,7 @@ let config = {
     },
   },
   scene: [
+    menu, // start
     level1,
     level2,
     level3,
@@ -344,8 +347,6 @@ let config = {
     congrat4,
     congrat5,
     about,
-    // start
-    menu,
   ],
 };
 
