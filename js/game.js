@@ -1,12 +1,3 @@
-var style = {
-  // font: "32px Arial"
-  // fill: "#ff0044"
-  // wordWrap: true
-  // wordWrapWidth: sprite.width
-  // align: "center"
-  // backgroundColor: "#ffff00"
-}
-
 // base scene
 // anything common across the entire game goes here
 class Base extends Phaser.Scene {
