@@ -111,19 +111,26 @@ class Level extends Base {
   }
 
   player_move() {
+    let moving = false;
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
+      moving = true;
     }
     else if (this.cursors.right.isDown) {
       this.player.setVelocityX(160);
+      moving = true;
     }
-    else if (this.cursors.up.isDown) {
+
+    if (this.cursors.up.isDown) {
       this.player.setVelocityY(-160);
+      moving = true;
     }
     else if (this.cursors.down.isDown) {
       this.player.setVelocityY(160);
+      moving = true;
     }
-    else {
+
+    if (!moving) {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
     }
