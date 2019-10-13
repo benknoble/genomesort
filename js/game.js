@@ -138,7 +138,7 @@ class mainMenu extends Base {
       this.aboutButton.setFrame(1);
     }, this);
     this.aboutButton.on('pointerout', () => {this.aboutButton.setFrame(0)}, this);
-    this.aboutButton.on('pointerdown', () => {window.open('how2website.html')});
+    this.aboutButton.on('pointerdown', () => {window.open('help.html')});
 
   }
 
