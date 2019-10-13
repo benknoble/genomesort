@@ -311,8 +311,16 @@ class CongratzScreen extends Base {
 // declare scenes
 let menu = new MainMenu()
 let about = new AboutScreen(menu);
-let congrat = new CongratzScreen(menu);
-let level1 = new Level(congrat)
+let congrat5 = new CongratzScreen(menu);
+let level5 = new Level(congrat5);
+let congrat4 = new CongratzScreen(level5);
+let level4 = new Level(congrat4);
+let congrat3 = new CongratzScreen(level4);
+let level3 = new Level(congrat3);
+let congrat2 = new CongratzScreen(level3);
+let level2 = new Level(congrat2);
+let congrat1 = new CongratzScreen(level2);
+let level1 = new Level(congrat1)
 
 let config = {
   type: Phaser.AUTO,
@@ -326,7 +334,15 @@ let config = {
   },
   scene: [
     level1,
-    congrat,
+    level2,
+    level3,
+    level4,
+    level5,
+    congrat1,
+    congrat2,
+    congrat3,
+    congrat4,
+    congrat5,
     about,
     // start
     menu,
