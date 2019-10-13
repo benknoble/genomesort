@@ -53,8 +53,8 @@ class Level extends Base {
     this.genes = [];
 
     {
-      let x0 = 180;
-      let y0 = 30;
+      let x0 = 120;
+      let y0 = 40;
       let dy = 60;
       let y = y0;
       for (let i = 0; i < 10; ++i) {
