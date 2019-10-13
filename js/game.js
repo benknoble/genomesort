@@ -151,12 +151,11 @@ let config = {
     },
   },
   scene: [
-    menu,
     level1,
+    // start
+    menu,
   ],
 };
 
 // start game
 let game = new Phaser.Game(config);
-game.scene.start('menu')
-
