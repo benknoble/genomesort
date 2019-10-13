@@ -33,9 +33,10 @@ class Base extends Phaser.Scene {
 // level scene
 class Level extends Base {
 
-  constructor(config, scene) {
+  constructor(config, scene, text) {
     super(config)
     this.next_scene = scene;
+    this.text = text;
   }
 
   preload() {
@@ -56,8 +57,22 @@ class Level extends Base {
       }, this).on('pointerdown', () => {
         this.scene.start('menu');
       }, this);
-    this.add.text(575, 50, 'Sort (descending)!', {
+    this.add.text(550, 50, 'Cure cancer! Sort genes!', {
       fill: "#000000",
+    });
+    this.add.text(550, 150, 'Mutation-caused Disease: ' + this.text['disease'], {
+      fill: "#000000",
+      wordWrap: {
+        width: 800-550,
+        useAdvancedWrap: true,
+      },
+    });
+    this.add.text(550, 300, 'Description: ' + this.text['description'], {
+      fill: "#000000",
+      wordWrap: {
+        width: 800-550,
+        useAdvancedWrap: true,
+      },
     });
     this.add.image(46/2, 565/2+10, 'arrow');
     this.player = this.physics.add.image(400, 300, 'gnome');
@@ -317,15 +332,50 @@ class CongratzScreen extends Base {
 let menu = new MainMenu('menu')
 let about = new AboutScreen('aboutscr', 'menu');
 let congrat5 = new CongratzScreen('c5', 'menu');
-let level5 = new Level('l5', 'c5');
+let level5 = new Level(
+  'l5',
+  'c5',
+  {
+    disease: 'Follicular lymphoma (FL)',
+    description: 'Cancer in lymphocyte B-cells, specifically centrocytes and centroblasts. About 15,000 new patients get diagnosed every year'
+  },
+);
 let congrat4 = new CongratzScreen('c4', 'l5');
-let level4 = new Level('l4', 'c4');
+let level4 = new Level(
+  'l4',
+  'c4',
+  {
+    disease: 'Mantle cell lymphoma (MCL)',
+    description: 'A type of B-cell lymphoma accounting for only about 15,000 patients present in U.S.'
+  },
+);
 let congrat3 = new CongratzScreen('c3', 'l4');
-let level3 = new Level('l3', 'c3');
+let level3 = new Level(
+  'l3',
+  'c3',
+  {
+    disease: "Burkitt's lymphoma",
+    description: 'Cancer in the B lymphocytes, commonly diagnosed in low-income countries and in young kids. The overall cure rate is about 90%.'
+  },
+);
 let congrat2 = new CongratzScreen('c2', 'l3');
-let level2 = new Level('l2', 'c2');
+let level2 = new Level(
+  'l2',
+  'c2',
+  {
+    disease: 'Chronic myelogenous leukemia (CML)',
+    description: 'Cancer in white blood cells characterized by increased growth of myeloid cells in blood marrow'
+  },
+);
 let congrat1 = new CongratzScreen('c1', 'l2');
-let level1 = new Level('l1', 'c1')
+let level1 = new Level(
+  'l1',
+  'c1',
+  {
+    disease: 'Infertility',
+    description: 'Gametes with unbalanced chromosome translocations'
+  },
+)
 
 let config = {
   type: Phaser.AUTO,
