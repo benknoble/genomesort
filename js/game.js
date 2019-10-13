@@ -43,11 +43,18 @@ class Level extends Base {
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.genes = this.physics.add.staticGroup({
-      key: 'gene',
-      repeat: 9,
-      setXY: { x: 120, y: 30, stepY: 60 },
-    });
+    this.genes = [];
+
+    {
+      let x0 = 120;
+      let y0 = 30;
+      let dy = 60;
+      let y = y0;
+      for (let i = 0; i < 10; ++i) {
+        this.genes.push(this.physics.add.staticImage(x0, y, 'gene'));
+        y += dy;
+      }
+    }
 
     function make_array(length) {
       // https://stackoverflow.com/a/5836921/4400820
@@ -71,17 +78,12 @@ class Level extends Base {
     this.values = make_array(10);
     this._gene_vals = [];
 
-    {
-      // put this in it's own scope to prevent leakage
-      let i = 0;
-      let that = this;
-      this.genes.children.iterate(function (gene) {
-        gene.name = "gene" + i;
-        gene.setData('number', that.values[i]);
-        let text = that.add.text(0, 0, ""+that.values[i], style)
-        gene.setData('text', text);
-        ++i;
-      });
+    for (let i = 0 ; i < this.genes.length; ++i) {
+      let gene = this.genes[i];
+      gene.name = "gene" + i;
+      gene.setData('number', this.values[i]);
+      let text = this.add.text(0, 0, ""+gene.getData('number'), style)
+      gene.setData('text', text);
     }
 
     this.physics.add.collider(this.player, this.genes, this.swap, null, this);
@@ -91,14 +93,12 @@ class Level extends Base {
     super.preload()
     this.player_move()
     this._gene_vals = [];
-    {
-      let that = this;
-      this.genes.children.iterate(function (gene) {
-        let text = gene.getData('text');
-        text.x = Math.floor(gene.x + gene.width / 2);
-        text.y = Math.floor(gene.y - 20);
-        that._gene_vals.push(gene.getData('number'));
-      });
+    for (let i = 0 ; i < this.genes.length; ++i) {
+      let gene = this.genes[i];
+      let text = gene.getData('text');
+      text.x = Math.floor(gene.x + gene.width / 2);
+      text.y = Math.floor(gene.y - 20);
+      this._gene_vals.push(gene.getData('number'));
     }
     if (this.check_sorted()) {
       // do something useful
@@ -130,14 +130,28 @@ class Level extends Base {
     // stop further hits, no matter what
     player.x += 20;
 
-    // let gx = gene.x;
-    // let gy = gene.y;
-    // let sx = to_swap.x;
-    // let sy = to_swap.y;
-    // gene.x = sx;
-    // gene.y = sy;
-    // to_swap.x = gx;
-    // to_swap.y = gy;
+    let swap_i = null;
+    for (let i = 1 ; i < this.genes.length; ++i) {
+      let g = this.genes[i];
+      if (g.name === gene.name) {
+        swap_i = i-1;
+        break;
+      }
+    }
+
+    if (swap_i === null) return;
+
+    {
+      let temp = gene.getData('text');
+      gene.setData('text', this.genes[swap_i].getData('text'));
+      this.genes[swap_i].setData('text', temp);
+    }
+    {
+      let temp = gene.getData('number');
+      gene.setData('number', this.genes[swap_i].getData('number'));
+      this.genes[swap_i].setData('number', temp);
+    }
+
   }
 
   check_sorted() {
