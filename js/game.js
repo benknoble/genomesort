@@ -69,6 +69,7 @@ class Level extends Base {
     }
 
     this.values = make_array(10);
+    this._gene_vals = [];
 
     {
       // put this in it's own scope to prevent leakage
@@ -89,11 +90,20 @@ class Level extends Base {
   update() {
     super.preload()
     this.player_move()
-    this.genes.children.iterate(function (gene) {
-      let text = gene.getData('text');
-      text.x = Math.floor(gene.x + gene.width / 2);
-      text.y = Math.floor(gene.y - 20);
-    });
+    this._gene_vals = [];
+    {
+      let that = this;
+      this.genes.children.iterate(function (gene) {
+        let text = gene.getData('text');
+        text.x = Math.floor(gene.x + gene.width / 2);
+        text.y = Math.floor(gene.y - 20);
+        that._gene_vals.push(gene.getData('number'));
+      });
+    }
+    if (this.check_sorted()) {
+      // do something useful
+      console.log('sorted');
+    }
   }
 
   player_move() {
@@ -132,6 +142,10 @@ class Level extends Base {
 
   check_sorted() {
     // check if the genes sorted
+    for (let i = 0; i < this._gene_vals.length-1; ++i) {
+      if (this._gene_vals[i] > this._gene_vals[i+1])
+        return false;
+    }
     return true;
   }
 
