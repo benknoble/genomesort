@@ -38,6 +38,7 @@ class Level extends Base {
     this.load.image('bg', 'assets/bg.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('gene', 'assets/gene.png');
+    this.load.image('arrow', 'assets/arrow.png');
   }
 
   create() {
@@ -46,6 +47,7 @@ class Level extends Base {
     this.add.text(575, 50, 'Sort (descending)!', {
       fill: "#000000",
     });
+    this.add.image(46/2, 565/2+10, 'arrow');
     this.player = this.physics.add.image(400, 300, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
