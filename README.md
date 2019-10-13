@@ -52,6 +52,7 @@ Also including lots of love :heart:.
 
 ## What's next for GeNOME sort
 
+1. Mobile support
 1. Level progression
 1. More levels
 1. Animations and audio
