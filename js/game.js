@@ -45,10 +45,11 @@ class Base extends Phaser.Scene {
 // level scene
 class Level extends Base {
 
-  constructor(config, scene, text) {
+  constructor(config, scene, n, text) {
     super(config)
     this.next_scene = scene;
     this.text = text;
+    this.n = n;
   }
 
   preload() {
@@ -98,10 +99,10 @@ class Level extends Base {
 
     {
       let x0 = 120;
-      let y0 = 40;
+      let y0 = 140 - ((this.n - 5) * 20);
       let dy = 60;
       let y = y0;
-      for (let i = 0; i < 10; ++i) {
+      for (let i = 0; i < this.n; ++i) {
         this.genes.push(this.physics.add.staticImage(x0, y, 'protein' + (i % 4 + 1)));
         y += dy;
       }
@@ -127,7 +128,7 @@ class Level extends Base {
       return shuffle(array);
     }
 
-    this.values = make_array(10);
+    this.values = make_array(this.n);
     this._gene_vals = [];
 
     for (let i = 0; i < this.genes.length; ++i) {
@@ -407,57 +408,62 @@ class LevelTitleScreen extends Base {
 // declare scenes
 let menu = new MainMenu('menu')
 let about = new AboutScreen('aboutscr', 'menu');
-let congrat5 = new CongratzScreen('c5', 'menu');
-let level5 = new Level(
-  'l5',
-  'c5',
-  {
-    disease: 'Follicular lymphoma (FL)',
-    description: 'Cancer in lymphocyte B-cells, specifically centrocytes and centroblasts. About 15,000 new patients get diagnosed every year'
-  },
-);
-let congrat4 = new CongratzScreen('c4', 't5');
-let level4 = new Level(
-  'l4',
-  'c4',
-  {
-    disease: 'Mantle cell lymphoma (MCL)',
-    description: 'A type of B-cell lymphoma accounting for only about 15,000 patients present in U.S.'
-  },
-);
-let congrat3 = new CongratzScreen('c3', 't4');
-let level3 = new Level(
-  'l3',
-  'c3',
-  {
-    disease: "Burkitt's lymphoma",
-    description: 'Cancer in the B lymphocytes, commonly diagnosed in low-income countries and in young kids. The overall cure rate is about 90%.'
-  },
-);
-let congrat2 = new CongratzScreen('c2', 't3');
-let level2 = new Level(
-  'l2',
-  'c2',
-  {
-    disease: 'Chronic myelogenous leukemia (CML)',
-    description: 'Cancer in white blood cells characterized by increased growth of myeloid cells in blood marrow'
-  },
-);
 let congrat1 = new CongratzScreen('c1', 't2');
-let level1 = new Level(
-  'l1',
-  'c1',
-  {
-    disease: 'Infertility',
-    description: 'Gametes with unbalanced chromosome translocations'
-  },
-)
+let congrat2 = new CongratzScreen('c2', 't3');
+let congrat3 = new CongratzScreen('c3', 't4');
+let congrat4 = new CongratzScreen('c4', 't5');
+let congrat5 = new CongratzScreen('c5', 'menu');
 let title1 = new LevelTitleScreen('t1', 'l1', 1);
 let title2 = new LevelTitleScreen('t2', 'l2', 2);
 let title3 = new LevelTitleScreen('t3', 'l3', 3);
 let title4 = new LevelTitleScreen('t4', 'l4', 4);
 let title5 = new LevelTitleScreen('t5', 'l5', 5);
 
+let level5 = new Level(
+  'l5',
+  'c5',
+  9,
+  {
+    disease: 'Follicular lymphoma (FL)',
+    description: 'Cancer in lymphocyte B-cells, specifically centrocytes and centroblasts. About 15,000 new patients get diagnosed every year'
+  },
+);
+let level4 = new Level(
+  'l4',
+  'c4',
+  8,
+  {
+    disease: 'Mantle cell lymphoma (MCL)',
+    description: 'A type of B-cell lymphoma accounting for only about 15,000 patients present in U.S.'
+  },
+);
+let level3 = new Level(
+  'l3',
+  'c3',
+  7,
+  {
+    disease: "Burkitt's lymphoma",
+    description: 'Cancer in the B lymphocytes, commonly diagnosed in low-income countries and in young kids. The overall cure rate is about 90%.'
+  },
+);
+let level2 = new Level(
+  'l2',
+  'c2',
+  6,
+  {
+    disease: 'Chronic myelogenous leukemia (CML)',
+    description: 'Cancer in white blood cells characterized by increased growth of myeloid cells in blood marrow'
+  },
+);
+let level1 = new Level(
+  'l1',
+  'c1',
+  5,
+  {
+    disease: 'Infertility',
+    description: 'Gametes with unbalanced chromosome translocations'
+  },
+)
 
 let config = {
   type: Phaser.AUTO,
