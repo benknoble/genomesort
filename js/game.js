@@ -170,32 +170,45 @@ class Level extends Base {
 }
 
 //Main Menu Scene
-class mainMenu extends Phaser.Scene {
+class mainMenu extends Base {
 
   constructor() {
     super()
   } 
 
   preload() {
+    super.preload();
     this.load.image('menu', 'assets/menuBackground.png')
     this.load.image('title', 'assets/GeNOME.png')
-    this.load.spritesheet('play', 'assets/play2.png',{ frameWidth: 193, frameHeight: 92 })
+    this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
+    this.load.spritesheet('about', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
   }
 
   create() {
+    super.create();
     this.add.image(400, 300, 'menu');
     this.add.image(400, 150, 'title');
 
+    // implementation for "Play" button
     this.startButton = this.add.sprite(400, 310, 'play').setFrame(0).setInteractive();
     this.startButton.on('pointerover', () => {
       this.startButton.setFrame(1);
-      console.log("hello");
     }, this);
     this.startButton.on('pointerout', () => {this.startButton.setFrame(0)}, this);
     this.startButton.on('pointerdown', () => {this.scene.start(level1)});
+
+    // implementation for "How to Play" Button
+    this.aboutButton = this.add.sprite(400, 430, 'about').setFrame(0).setInteractive();
+    this.aboutButton.on('pointerover', () => {
+      this.aboutButton.setFrame(1);
+    }, this);
+    this.aboutButton.on('pointerout', () => {this.aboutButton.setFrame(0)}, this);
+    this.aboutButton.on('pointerdown', () => {window.open('help.html')});
+
   }
 
   update() {
+    super.update();
   }
 
 

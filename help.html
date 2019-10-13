@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo">Welcome to GeNOME Sort!</h1>
+  <p class="w3-xlarge">Instructions to play:</p>
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1>Moving Around</h1>
+      <h5 class="w3-padding-32">Use the arrow keys to move the Gnome around.</h5>
+    </div>
+
+    <div class="w3-third w3-center">
+      <img src="data:image/png;base64,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">
+      </div>
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+      <img src="https://www.shareicon.net/data/512x512/2016/01/10/701069_arrows_512x512.png" style="max-width:50%">
+    </div>
+
+    <div class="w3-twothird">
+      <h1>Swapping Proteins</h1>
+      <h5 class="w3-padding-32">Treating genetic mutation is easy! When the Gnome touches a protein, it swaps with the protein above.</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Third Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1>Sort the Proteins</h1>
+      <h5 class="w3-padding-32">Rearrange the proteins in increasing order from top to bottom to save the child from the genetic disorder.</h5>
+    </div>
+
+    <div class="w3-third w3-center">
+      <img src="https://image.flaticon.com/icons/png/512/32/32144.png" style="max-width:50%">
+      </div>
+  </div>
+</div>
+
+<!-- Fourth Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+      <a href="https://en.wikipedia.org/wiki/Gnome_sort"><img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Sorting_gnomesort_anim.gif" style="max-width:60%">
+    </div>
+
+    <div class="w3-twothird">
+      <h1>About Gnome Sort</h1>
+      <h5 class="w3-padding-32">This sorting process you are simulatimg is known as a Gnome Sort, sometimes referred to as "Stupid Sort". The idea is that a garden gnome wants to sort his flower pots by looking 
+      at the flower pot next to him and comparing to the previous pot. If they are in the correct order, he moves on; if not, he swaps it with the previous pot.<br><br>Read more about it here: https://www.geeksforgeeks.org/gnome-sort-a-stupid-one/ </h5>
+    </div>
+  </div>
+</div>
+</script>
+
+</body>
+</html>
