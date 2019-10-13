@@ -29,6 +29,7 @@ class Base extends Phaser.Scene {
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('bg', 'assets/bg.png');
     this.load.image('wall', 'assets/wall.png');
+    this.load.spritesheet('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
   }
 
   create() {
@@ -53,6 +54,17 @@ class Level extends Base {
   create() {
     super.create()
     this.add.image(400, 300, 'bg');
+    this.back = this.add.sprite(700, 600, 'back')
+      .setFrame(0)
+      .setInteractive()
+      .on('pointerover', () => {
+        this.back.setFrame(1);
+      }, this)
+      .on('pointerout', () => {
+        this.back.setFrame(0);
+      }, this).on('pointerdown', () => {
+        this.scene.start('menu');
+      }, this);
     this.add.text(575, 50, 'Sort (descending)!', {
       fill: "#000000",
     });
