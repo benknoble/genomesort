@@ -187,7 +187,7 @@ class Level extends Base {
 }
 
 //Main Menu Scene
-class mainMenu extends Base {
+class MainMenu extends Base {
 
   constructor() {
     super()
@@ -198,7 +198,8 @@ class mainMenu extends Base {
     this.load.image('menu', 'assets/menuBackground.png')
     this.load.image('title', 'assets/GeNOME.png')
     this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
-    this.load.spritesheet('about', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
+    this.load.spritesheet('help', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
+    this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92})
   }
 
   create() {
@@ -215,13 +216,20 @@ class mainMenu extends Base {
     this.startButton.on('pointerdown', () => {this.scene.start(level1)});
 
     // implementation for "How to Play" Button
-    this.aboutButton = this.add.sprite(400, 430, 'about').setFrame(0).setInteractive();
+    this.helpButton = this.add.sprite(400, 405, 'help').setFrame(0).setInteractive();
+    this.helpButton.on('pointerover', () => {
+      this.helpButton.setFrame(1);
+    }, this);
+    this.helpButton.on('pointerout', () => {this.helpButton.setFrame(0)}, this);
+    this.helpButton.on('pointerdown', () => {window.open('help.html')});
+
+    // Implementation for the "About" Button
+    this.aboutButton = this.add.sprite(400, 500, 'about').setFrame(0).setInteractive();
     this.aboutButton.on('pointerover', () => {
       this.aboutButton.setFrame(1);
     }, this);
     this.aboutButton.on('pointerout', () => {this.aboutButton.setFrame(0)}, this);
-    this.aboutButton.on('pointerdown', () => {window.open('help.html')});
-
+    this.aboutButton.on('pointerdown', () => {this.scene.start(about)});
   }
 
   update() {
@@ -231,10 +239,80 @@ class mainMenu extends Base {
 
 }
 
+class AboutScreen extends Base {
+
+  constructor(menu) {
+    super();
+    this._menu = menu;
+  }
+
+  preload() {
+    super.preload();
+    this.load.image('menu', 'assets/menuBackground.png');
+    
+    // this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92});   
+    // this.load.image('aboutPanel', 'assets/aboutPanel.png');
+    // this.load.image('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
+  }
+
+  create() {
+    super.create();
+    this.add.image(400, 300, 'menu');
+    // this.add.image(400, 450, 'aboutPanel')
+    // this.aboutButton = this.add.sprite(400, 100, 'about').setFrame(0).setInteractive();    
+
+    // this.backButton = this.add.sprite(50, 345, 'back').setFrame(0).setInteractive()
+    // this.backButton.on('pointerover', () => {
+    //   this.backButton.setFrame(1);
+    // }, this);
+    // this.backButton.on('pointerout', () => {this.backButton.setFrame(0)}, this);
+    // this.backButton.on('pointerdown', () => {this.scene.start(menu)});
+  }
+
+  update() {
+    super.update()
+  }
+
+}
+
+
+class CongratzScreen extends Base {
+
+  constructor(scene) {
+    super();
+    this.next = scene;
+  }
+
+  preload(){
+    super.preload()
+    this.load.image('congratz', 'assets/congratsBack.png')
+    this.load.image('congratzMessage', 'assets/congratsTEXT.png')
+    this.load.spritesheet('next', 'assets/nextButton.png', {frameWidth: 193, frameHeight: 92})
+  }
+
+  create() {
+    super.create()
+    this.add.image(400, 300, 'congratz');
+    this.add.image(400, 150, 'congratzMessage')
+    this.nextButton = this.add.sprite(400, 500, 'next').setFrame(0).setInteractive();
+    this.nextButton.on('pointerover', () => {
+      this.nextButton.setFrame(1);
+    }, this);
+    this.nextButton.on('pointerout', () => {this.nextButton.setFrame(0)}, this);
+    this.nextButton.on('pointerdown', () => {this.scene.start(this.next)});
+  }
+
+  update() {
+    super.update()
+  }
+
+}
 
 // declare scenes
 let menu = new mainMenu()
-let level1 = new Level(menu)
+let about = new AboutScreen(menu);
+let congrat = new CongratzScreen(menu);
+let level1 = new Level(congrat)
 
 let config = {
   type: Phaser.AUTO,
@@ -248,6 +326,8 @@ let config = {
   },
   scene: [
     level1,
+    congrat,
+    about,
     // start
     menu,
   ],
