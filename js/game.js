@@ -18,17 +18,18 @@ class Base extends Phaser.Scene {
     this.load.spritesheet('next', 'assets/nextButton.png', {frameWidth: 193, frameHeight: 92})
     this.load.image('congratzMessage', 'assets/congratsTEXT.png')
     this.load.image('congratz', 'assets/congratsBack.png')
-    this.load.image('menu', 'assets/menuBackground.png');
+    this.load.image('menu1', 'assets/menuBackground.png');
     this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92})
     this.load.spritesheet('help', 'assets/howtobuttons.png', {frameWidth: 251, frameHeight: 92 })
     this.load.spritesheet('play', 'assets/play2.png', { frameWidth: 193, frameHeight: 92 })
     this.load.image('title', 'assets/GeNOME.png')
-    this.load.image('menu', 'assets/menuBackground.png')
     this.load.image('arrow', 'assets/arrow.png');
     this.load.image('gene', 'assets/gene.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('bg', 'assets/bg.png');
-    this.load.image('wall', 'assets/wall.png');
+    this.load.image('wall', 'assets/wall.png');  
+    this.load.image('aboutPanel', 'assets/woodPanel3.png');
+    this.load.spritesheet('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
   }
 
   create() {
@@ -209,7 +210,7 @@ class MainMenu extends Base {
 
   create() {
     super.create();
-    this.add.image(400, 300, 'menu');
+    this.add.image(400, 300, 'menu1');
     this.add.image(400, 150, 'title');
 
     // implementation for "Play" button
@@ -234,7 +235,7 @@ class MainMenu extends Base {
       this.aboutButton.setFrame(1);
     }, this);
     this.aboutButton.on('pointerout', () => {this.aboutButton.setFrame(0)}, this);
-    this.aboutButton.on('pointerdown', () => {this.scene.start('about')});
+    this.aboutButton.on('pointerdown', () => {this.scene.start('aboutscr')});
   }
 
   update() {
@@ -253,24 +254,36 @@ class AboutScreen extends Base {
 
   preload() {
     super.preload();
-    
-    // this.load.image('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
-    // this.load.image('aboutPanel', 'assets/aboutPanel.png');
-    // this.load.spritesheet('about', 'assets/about.png', {frameWidth: 193, frameHeight: 92});   
   }
 
   create() {
     super.create();
-    this.add.image(400, 300, 'menu');
-    // this.add.image(400, 450, 'aboutPanel')
-    // this.aboutButton = this.add.sprite(400, 100, 'about').setFrame(0).setInteractive();    
+    this.add.image(400, 300, 'menu1');
+    this.add.image(400, 250, 'aboutPanel')
+    this.aboutButton = this.add.sprite(400, 50, 'about').setFrame(0).setInteractive();    
 
-    // this.backButton = this.add.sprite(50, 345, 'back').setFrame(0).setInteractive()
-    // this.backButton.on('pointerover', () => {
-    //   this.backButton.setFrame(1);
-    // }, this);
-    // this.backButton.on('pointerout', () => {this.backButton.setFrame(0)}, this);
-    // this.backButton.on('pointerdown', () => {this.scene.start(menu)});
+    this.backButton = this.add.sprite(93, 500, 'back').setFrame(0).setInteractive()
+    this.backButton.on('pointerover', () => {
+      this.backButton.setFrame(1);
+    }, this);
+    this.backButton.on('pointerout', () => {this.backButton.setFrame(0)}, this);
+    this.backButton.on('pointerdown', () => {this.scene.start('menu')});
+
+    this.add.text(125, 135, "We came up with this game \t \t \t in order to educate about different genetic disorders caused by the translocation of genes, and in the gaming process, to let the user experiment with the workings of Gnome Sort. The combination of this resulted cleverly in the title 'GeNOME Sorting' both referring to 'Genome' and 'Gnome'.", {
+      fill: "#000000",
+        wordWrap: {
+          width: 710 - 125,
+          useAdvancedWrap: true,
+      },
+    });
+
+    this.add.text(125, 245, "What are genetic disorders? \n Genetic disorders are diseases caused by change in the genetic sequence as a result of hereditary abnormality or non-hereditary mutations in a single or multiple genes. There can be many ways the genetic sequence is altered - one of which is when chromosome segments rearranges locations with each other either within the same chromosome or between chromosomes. In this game we simulate the untanglement of altered genetic sequence in order to treat the genetic disease.", {
+      fill: "#000000",
+        wordWrap: {
+          width: 710 - 125,
+          useAdvancedWrap: true,
+      },
+    });
   }
 
   update() {
@@ -295,9 +308,10 @@ class CongratzScreen extends Base {
     super.create()
     this.add.image(400, 300, 'congratz');
     this.add.image(400, 150, 'congratzMessage')
+
     this.nextButton = this.add.sprite(400, 500, 'next').setFrame(0).setInteractive();
     this.nextButton.on('pointerover', () => {
-      this.nextButton.setFrame(1);
+      this.nextButton.setFrame(1)
     }, this);
     this.nextButton.on('pointerout', () => {this.nextButton.setFrame(0)}, this);
     this.nextButton.on('pointerdown', () => { this.scene.start(this.next)
