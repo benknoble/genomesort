@@ -151,8 +151,42 @@ class Level extends Base {
 
 }
 
+//Main Menu Scene
+class mainMenu extends Phaser.Scene {
+
+  constructor() {
+    super()
+  } 
+
+  preload() {
+    this.load.image('menu', 'assets/menuBackground.png')
+    this.load.image('title', 'assets/GeNome.png')
+    this.load.spritesheet('play', 'assets/play2.png',{ frameWidth: 193, frameHeight: 92 })
+  }
+
+  create() {
+    this.add.image(400, 300, 'menu');
+    this.add.image(400, 150, 'title');
+
+    this.startButton = this.add.sprite(400, 310, 'play').setFrame(0).setInteractive();
+    this.startButton.on('pointerover', () => {
+      this.startButton.setFrame(1);
+      console.log("hello");
+    }, this);
+    this.startButton.on('pointerout', () => {this.startButton.setFrame(0)}, this);
+    this.startButton.on('pointerdown', () => {this.scene.start(level1)});
+  }
+
+  update() {
+  }
+
+
+}
+
+
 // declare scenes
 let level1 = new Level()
+let menu = new mainMenu()
 
 let config = {
   type: Phaser.AUTO,
@@ -166,9 +200,10 @@ let config = {
   },
   scene: [
     level1,
+    // start
+    menu,
   ],
 };
 
 // start game
 let game = new Phaser.Game(config);
-game.scene.start('level1')
