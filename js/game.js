@@ -174,7 +174,7 @@ class mainMenu extends Phaser.Scene {
 
   preload() {
     this.load.image('menu', 'assets/menuBackground.png')
-    this.load.image('title', 'assets/GeNome.png')
+    this.load.image('title', 'assets/GeNOME.png')
     this.load.spritesheet('play', 'assets/play2.png',{ frameWidth: 193, frameHeight: 92 })
   }
 
