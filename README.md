@@ -53,7 +53,9 @@ Also including lots of love :heart:.
 ## What's next for GeNOME sort
 
 1. Level progression
+1. More levels
 1. Animations and audio
+  - settings to disable
 1. UI/UX
 1. In-house graphics
 1. Stronger theming
