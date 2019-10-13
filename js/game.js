@@ -309,7 +309,7 @@ class CongratzScreen extends Base {
 }
 
 // declare scenes
-let menu = new mainMenu()
+let menu = new MainMenu()
 let about = new AboutScreen(menu);
 let congrat = new CongratzScreen(menu);
 let level1 = new Level(congrat)
