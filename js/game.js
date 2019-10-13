@@ -33,20 +33,24 @@ class Level extends Base {
 
   preload() {
     super.preload()
+    this.load.image('bg', 'assets/bg.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('gene', 'assets/gene.png');
+    this.load.image('arrow', 'assets/arrow.png');
   }
 
   create() {
     super.preload()
+    this.add.image(400, 300, 'bg');
     this.player = this.physics.add.image(400, 300, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.physics.add.staticImage(100/2, 550/2, 'arrow');
 
     this.genes = [];
 
     {
-      let x0 = 120;
+      let x0 = 180;
       let y0 = 30;
       let dy = 60;
       let y = y0;
@@ -209,7 +213,7 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
-      // debug: true,
+      debug: true,
     },
   },
   scene: [
