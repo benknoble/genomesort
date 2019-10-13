@@ -290,7 +290,7 @@ class AboutScreen extends Base {
     this.backButton.on('pointerout', () => {this.backButton.setFrame(0)}, this);
     this.backButton.on('pointerdown', () => {this.scene.start('menu')});
 
-    this.add.text(125, 135, "We came up with this game \t \t \t in order to educate about different genetic disorders caused by the translocation of genes, and in the gaming process, to let the user experiment with the workings of Gnome Sort. The combination of this resulted cleverly in the title 'GeNOME Sorting' both referring to 'Genome' and 'Gnome'.", {
+    this.add.text(125, 125, "We came up with this game \t \t \t in order to educate about different genetic disorders caused by the translocation of genes, and in the gaming process, to let the user experiment with the workings of Gnome Sort. The combination of this resulted cleverly in the title 'GeNOME Sorting' both referring to 'Genome' and 'Gnome'.", {
       fill: "#000000",
         wordWrap: {
           width: 710 - 125,
@@ -298,7 +298,7 @@ class AboutScreen extends Base {
       },
     });
 
-    this.add.text(125, 245, "What are genetic disorders? \n Genetic disorders are diseases caused by change in the genetic sequence as a result of hereditary abnormality or non-hereditary mutations in a single or multiple genes. There can be many ways the genetic sequence is altered - one of which is when chromosome segments rearranges locations with each other either within the same chromosome or between chromosomes. In this game we simulate the untanglement of altered genetic sequence in order to treat the genetic disease.", {
+    this.add.text(125, 235, "What are genetic disorders? \n Genetic disorders are diseases caused by change in the genetic sequence as a result of hereditary abnormality or non-hereditary mutations in a single or multiple genes. There can be many ways the genetic sequence is altered - one of which is when chromosome segments rearranges locations with each other either within the same chromosome or between chromosomes. In this game we simulate the untanglement of altered genetic sequence in order to treat the genetic disease.", {
       fill: "#000000",
         wordWrap: {
           width: 710 - 125,
