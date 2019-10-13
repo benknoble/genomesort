@@ -44,17 +44,20 @@ class Level extends Base {
   create() {
     super.preload()
     this.add.image(400, 300, 'bg');
+    this.add.text(575, 50, 'Sort (descending)!', {
+      fill: "#000000",
+    });
+    this.add.image(46/2, 565/2+10, 'arrow');
     this.player = this.physics.add.image(400, 300, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.physics.add.staticImage(100/2, 550/2, 'arrow');
     this.wall = this.physics.add.staticImage(438 * 3/2, 300, 'wall');
 
     this.genes = [];
 
     {
-      let x0 = 180;
-      let y0 = 30;
+      let x0 = 120;
+      let y0 = 40;
       let dy = 60;
       let y = y0;
       for (let i = 0; i < 10; ++i) {
@@ -89,7 +92,9 @@ class Level extends Base {
       let gene = this.genes[i];
       gene.name = "gene" + i;
       gene.setData('number', this.values[i]);
-      let text = this.add.text(0, 0, ""+gene.getData('number'), style)
+      let text = this.add.text(0, 0, ""+gene.getData('number'), {
+        fill: "#000000",
+      })
       gene.setData('text', text);
     }
 
