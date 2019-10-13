@@ -33,6 +33,7 @@ class Level extends Base {
 
   preload() {
     super.preload()
+    this.load.image('wall', 'assets/wall.png');
     this.load.image('bg', 'assets/bg.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('gene', 'assets/gene.png');
@@ -46,6 +47,7 @@ class Level extends Base {
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
     this.physics.add.staticImage(100/2, 550/2, 'arrow');
+    this.wall = this.physics.add.staticImage(438 * 3/2, 300, 'wall');
 
     this.genes = [];
 
@@ -91,6 +93,7 @@ class Level extends Base {
     }
 
     this.physics.add.collider(this.player, this.genes, this.swap, null, this);
+    this.physics.add.collider(this.player, this.wall);
   }
 
   update() {
