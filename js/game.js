@@ -38,16 +38,17 @@ class Level extends Base {
     this.load.image('bg', 'assets/bg.png');
     this.load.image('gnome', 'assets/gnome.png');
     this.load.image('gene', 'assets/gene.png');
-    this.load.image('arrow', 'assets/arrow.png');
   }
 
   create() {
     super.preload()
     this.add.image(400, 300, 'bg');
+    this.add.text(575, 50, 'Sort (descending)!', {
+      fill: "#000000",
+    });
     this.player = this.physics.add.image(400, 300, 'gnome');
     this.player.setCollideWorldBounds(true);
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.physics.add.staticImage(100/2, 550/2, 'arrow');
     this.wall = this.physics.add.staticImage(438 * 3/2, 300, 'wall');
 
     this.genes = [];
