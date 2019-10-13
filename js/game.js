@@ -27,8 +27,9 @@ class Base extends Phaser.Scene {
 // level scene
 class Level extends Base {
 
-  constructor() {
+  constructor(scene) {
     super()
+    this.next_scene = scene;
   }
 
   preload() {
@@ -106,7 +107,8 @@ class Level extends Base {
     }
     if (this.check_sorted()) {
       // do something useful
-      console.log('sorted');
+      // console.log('sorted');
+      this.scene.start(this.next_scene);
     }
   }
 
@@ -223,8 +225,8 @@ class mainMenu extends Base {
 
 
 // declare scenes
-let level1 = new Level()
 let menu = new mainMenu()
+let level1 = new Level(menu)
 
 let config = {
   type: Phaser.AUTO,
