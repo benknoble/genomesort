@@ -21,6 +21,8 @@ class Base extends Phaser.Scene {
     this.load.image('bg', 'assets/bg.png');
     this.load.image('wall', 'assets/wall.png');
     this.load.spritesheet('back', 'assets/backButton.png', {frameWidth: 186, frameHeight: 203});
+    this.load.image('dna', 'assets/dna.png');
+    this.load.image('sick', 'assets/sick.png');
   }
 
   create() {
@@ -60,6 +62,7 @@ class Level extends Base {
     this.add.text(550, 50, 'Cure cancer! Sort genes!', {
       fill: "#000000",
     });
+    this.add.image(550 + 100, 60 + 50, 'dna');
     this.add.text(550, 150, 'Mutation-caused Disease: ' + this.text['disease'], {
       fill: "#000000",
       wordWrap: {
@@ -67,7 +70,8 @@ class Level extends Base {
         useAdvancedWrap: true,
       },
     });
-    this.add.text(550, 300, 'Description: ' + this.text['description'], {
+    this.add.image(550 + 110, 160 + 110, 'sick');
+    this.add.text(550, 350, 'Description: ' + this.text['description'], {
       fill: "#000000",
       wordWrap: {
         width: 800-550,
