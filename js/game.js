@@ -46,7 +46,7 @@ class Level extends Base {
     this.genes = this.physics.add.staticGroup({
       key: 'gene',
       repeat: 9,
-      setXY: { x: 120, y: 60, stepY: 55 },
+      setXY: { x: 120, y: 30, stepY: 60 },
     });
 
     function make_array(length) {
@@ -83,8 +83,7 @@ class Level extends Base {
       });
     }
 
-    this.physics.add.overlap(this.player, this.genes, this.swap, null, this);
-    this.physics.add.collider(this.player, this.genes);
+    this.physics.add.collider(this.player, this.genes, this.swap, null, this);
   }
 
   update() {
@@ -116,8 +115,19 @@ class Level extends Base {
     }
   }
 
+  // swap one down
   swap(player, gene) {
-    // swap one down
+    // stop further hits, no matter what
+    player.x += 20;
+
+    // let gx = gene.x;
+    // let gy = gene.y;
+    // let sx = to_swap.x;
+    // let sy = to_swap.y;
+    // gene.x = sx;
+    // gene.y = sy;
+    // to_swap.x = gx;
+    // to_swap.y = gy;
   }
 
   check_sorted() {
